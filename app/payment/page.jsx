@@ -1,18 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { checkUser } from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Navbar from "@/components/navbar";
+import SkeletonPaymentOptions from "./skeletonPaymentOptions";
 
 const PaymentOptions = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("refer");
   Cookies.set("code", code);
-  const [promoCode, setPromoCode] = useState(code);
+  const [promoCode, setPromoCode] = useState(code||"");
   const [price, setPrice] = useState(12000);
   const [discount, setDiscount] = useState(0);
   const [referralName, setReferralName] = useState("");
@@ -127,7 +128,9 @@ const PaymentOptions = () => {
   }, [code]);
 
   return (
-    <div
+
+    
+      <div
       className="flex flex-col min-h-screen text-black space-y-8"
       style={{ backgroundImage: 'url(/bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
@@ -231,7 +234,18 @@ const PaymentOptions = () => {
       
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     </div>
+    
+    
   );
 };
 
-export default PaymentOptions;
+function Payment() {
+  return (
+    // You could have a loading skeleton as the `fallback` too
+    <Suspense fallback={SkeletonPaymentOptions}>
+      <PaymentOptions />
+    </Suspense>
+  )
+}
+
+export default Payment
