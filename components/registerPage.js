@@ -96,13 +96,13 @@ const RegisterPage = ({ setIsLoginPage }) => {
         <h1 className="text-2xl md:text-4xl font-bold text-center text-white">
           Generate passive <span className="">Income</span> from your <span className="">Influence</span>
         </h1>
-        <div className="flex flex-wrap justify-center mt-4 md:mt-10 space-x-4 space-y-4 md:space-y-0">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-10">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="relative">
+            <div key={i} className="flex justify-center items-center">
               <img
                 src={`https://via.placeholder.com/150`}
                 alt={`Influencer ${i}`}
-                className="rounded-full w-24 h-24 md:w-32 md:h-32 mt-4 md:mt-0"
+                className="rounded-full w-24 h-24 md:w-32 md:h-32"
               />
             </div>
           ))}

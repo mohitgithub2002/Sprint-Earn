@@ -60,17 +60,17 @@ const LoginPage = ({ setIsLoginPage }) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row h-screen overflow-y-scroll">
       {/* Left Side */}
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-6 md:p-10"
+      <div className="w-full h-1/2 md:h-full md:w-1/2 flex flex-col items-center justify-center p-6 md:p-10"
         style={{ backgroundImage: 'url(/bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
         <h1 className="text-2xl md:text-4xl font-bold text-center text-white">
           Generate passive <span className="text-">Income</span> from your <span className="text">Influence</span>
         </h1>
-        <div className="flex flex-wrap justify-center mt-4 md:mt-10 space-x-4 space-y-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 md:mt-10">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="relative">
+            <div key={i} className="flex justify-center items-center">
               <img
                 src={`https://via.placeholder.com/150`}
                 alt={`Influencer ${i}`}
@@ -82,7 +82,7 @@ const LoginPage = ({ setIsLoginPage }) => {
       </div>
 
       {/* Right Side */}
-      <div className="w-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 text-black">
+      <div className="w-full h-1/2 md:h-full md:w-1/2 bg-white flex flex-col items-center justify-center p-6 md:p-10 text-black">
         <div className="flex items-center justify-center mb-4 md:mb-8">
           <h2 className="text-2xl md:text-4xl font-bold ">Welcome to <span className="font-normal italic ">Sprint</span><span className=" ">Earn</span></h2>
         </div>
