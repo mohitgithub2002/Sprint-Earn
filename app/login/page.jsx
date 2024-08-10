@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { authOption } from "../api/auth/[...nextauth]/route";
 const SignIn = async() =>{
     const session = await getServerSession(authOption)
-    if(session) redirect("/home")
+    if(session) redirect("/payment")
     return (
         <Login/>
     )
