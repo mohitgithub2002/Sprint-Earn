@@ -2,8 +2,8 @@ import React from 'react';
 
 const PremiumCard = () => {
   return (
-    <div className="bg-green-300 rounded-lg p-6  flex items-center justify-between space-x-4 w-1/2 ">
-      <div className="space-y-4">
+    <div className="bg-green-300 rounded-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 space-x-0 md:space-x-4 w-full md:w-1/2">
+      <div className="space-y-4 text-center md:text-left">
         <button className="bg-green-50 text-green-700 text-xs font-semibold py-1 px-2 rounded-full">
           IMPORTANT
         </button>
