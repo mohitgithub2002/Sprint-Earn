@@ -1,7 +1,10 @@
 import Navbar from "@/components/mobilenav";
 import Sidebar, { BottomBar } from "@/components/sidebar";
-
-export default function DashboardTemplate({ children }) {
+import { checkPremium } from "@/utils/premium";
+import { redirect } from "next/navigation";
+export default async function DashboardTemplate({ children }) {
+    const isPremium = await checkPremium();
+    if(!isPremium) redirect("/payment")
     return (
       <html lang="en">
         <body >

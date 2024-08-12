@@ -1,16 +1,11 @@
-"use client"
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-export default function Navbar() {
-    const { data: session, status } = useSession();
-    const [image,setImage] = useState("");
-    useEffect(() => {
-        if (status === "authenticated") {
-          setImage(session.user.image);
-        }
-    }, [session, status]);
+import React from 'react';
+import { getServerSession } from "next-auth";
+import { authOption } from "@/app/api/auth/[...nextauth]/route";
+export default async function Navbar() {
+    const session = await getServerSession(authOption)
+    const image = session?.user?.image
     return (
       <nav className="flex md:hidden text-black justify-between items-center p-4 bg-white shadow-sm fixed top-0 w-full z-10">
         <div className="text-xl font-bold">Sprint Earn</div>
