@@ -10,7 +10,7 @@ const Program = async ({ params }) => {
     const weekDetail = data[weekNumber - 1];
 
     return (
-        <div className="h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 overflow-scroll">
+        <div className="h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 overflow-scroll pb-20 md:pb-0">
             <div className="pt-4">
                 <WeekHeader weekDetail={weekDetail} />
             </div>

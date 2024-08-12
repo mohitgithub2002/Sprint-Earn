@@ -6,7 +6,7 @@ import PremiumCard from "@/components/home/task";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 text-black">
+    <div className="min-h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 text-black pb-20 md:pb-0">
       <div className="text-lg md:text-xl font-bold mt-4 text-left">
         👋 Welcome, Mohit Goyal!
       </div>

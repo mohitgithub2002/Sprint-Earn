@@ -75,7 +75,7 @@ function Updates({ params }) {
     );
 
   return (
-    <div className="h-screen flex items-center justify-center bg-white text-black overflow-y-scroll">
+    <div className="h-screen flex items-center justify-center bg-white text-black overflow-y-scroll pb-20 md:pb-0">
       <div className="w-full md:w-3/4 lg:w-1/2 min-h-[calc(100dvh-57px)] max-w-6xl mx-4 md:mx-24 pb-12 md:py-12">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-start mb-4">
           Week #{weekNumber} Update

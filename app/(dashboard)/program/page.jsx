@@ -7,7 +7,7 @@ const Program = async () => {
   const data = await getData();
 
   return (
-    <div className="min-h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 overflow-scroll">
+    <div className="min-h-screen bg-white flex flex-col space-y-4 px-4 md:px-8 overflow-scroll pb-20 md:pb-0">
       <div className="pt-4">
         <WelcomeCard />
       </div>

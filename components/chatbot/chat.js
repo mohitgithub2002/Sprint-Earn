@@ -9,13 +9,13 @@ const Chat = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col pb-12">
+    <div className="min-h-screen flex flex-col pb-12 md:pb-0">
       {/* Header */}
-      <header className="flex items-center justify-between p-4 bg-white shadow-md">
-        <div className="text-xl font-bold">Sprint Earn AI</div>
-        <div className="flex items-center space-x-4">
+      <header className="flex items-center justify-end md:justify-between p-4 bg-white">
+        <div className="hidden md:block text-xl font-bold">Sprint Earn AI</div>
+        <div className="flex  items-center space-x-4">
           
-          <button className="bg-cta text-white px-4 py-2 rounded-full">New Chat</button>
+          <button className="bg-cta text-white px-4 py-2 rounded-full hidden md:block">New Chat</button>
           {/* <i className="fas fa-user-circle text-xl hidden md:inline"></i> */}
           <button className="md:hidden" onClick={toggleSidebar}>
             <i className="fas fa-bars text-xl"></i>
@@ -37,6 +37,7 @@ const Chat = () => {
               <i className="fas fa-times text-xl"></i>
             </button>
           </div>
+          <button className="bg-cta text-white px-4 py-2 rounded-full mb-4 md:hidden"> New Chat</button>
           <ul className="space-y-2 overflow-y-auto">
             <li className="p-2 border border-slate-400 bg-gray-100 rounded-full">New Project</li>
             <li className="p-2 border border-slate-400 bg-gray-100 rounded-full">Learning From 100 Years of...</li>
@@ -60,9 +61,9 @@ const Chat = () => {
         <div className="flex flex-col items-center justify-center p-4 md:p-8 flex-grow">
           <div className="flex-1 flex items-center">
             <div className="w-full text-center">
-              <h1 className="text-2xl md:text-4xl font-bold">Welcome to Script</h1>
+              <h1 className="text-2xl md:text-4xl font-bold">Welcome to Sprint Earn</h1>
               <p className="text-center text-gray-600 mb-4 md:mb-8">
-                Get started by Script a task and Chat can do the rest. Not sure where to start?
+                Get started by SprintEarn Chat. Not sure where to start?
               </p>
               <div className="grid grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-8 max-w-md mx-auto">
                 <div className="flex items-center justify-between p-4 bg-yellow-100 rounded-lg shadow-md">
