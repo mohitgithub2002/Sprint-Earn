@@ -19,6 +19,14 @@ const userSchema = new Schema({
     password: String,
     orderId: String,
     paymentId: String,
+    currentDay: {
+        type: Number,
+        default: 1
+    },
+    currentWeek: {
+        type: Number,
+        default: 1
+    },
     isPremium: {
         type: Boolean,
         default: false
