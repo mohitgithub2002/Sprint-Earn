@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import Sidebar, { BottomBar } from "@/components/sidebar";
 
 export default function DashboardTemplate({ children }) {
     return (
@@ -6,6 +6,7 @@ export default function DashboardTemplate({ children }) {
         <body >
             <div className="flex">
                 <Sidebar />
+                <BottomBar />
                 <div className="flex-1 ">
                     {children}
                 </div>
