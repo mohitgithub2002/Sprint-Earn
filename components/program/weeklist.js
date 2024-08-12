@@ -9,11 +9,9 @@ const WeekList = ({ data }) => {
     const [currentDay, setCurrentDay] = useState(1);
 
     useEffect(() => {
-        // Simulate fetching the current week value
         const fetchCurrentWeek = async () => {
             const data = await checkUser();
-            const result = data.currentWeek // your client-side function
-            console.log(result);
+            const result = data.currentWeek;
             setCurrentWeek(result);
             setCurrentDay(data.currentDay);
         };
@@ -22,11 +20,11 @@ const WeekList = ({ data }) => {
     }, []);
 
     if (currentWeek === null) {
-        return <div>Loading...</div>; // or some loading state
+        return <div>Loading...</div>;
     }
 
     return (
-        <div className="grid grid-flow-row grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {data.map((weekData, index) => (
                 <div key={index}>
                     {index + 1 <= currentWeek ? (
@@ -34,7 +32,7 @@ const WeekList = ({ data }) => {
                             <CourseCard data={weekData} currentDay={currentDay} currentWeek={currentWeek} />
                         </Link>
                     ) : (
-                        <div className="opacity-80 ">
+                        <div className="opacity-80">
                             <CourseCard data={weekData} currentWeek={currentWeek} />
                         </div>
                     )}
