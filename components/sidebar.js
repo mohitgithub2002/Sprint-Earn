@@ -33,7 +33,7 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="w-1/5 bg-[#e5e5e5] min-h-screen p-6 pr-14">
+    <div className="w-1/5 bg-white min-h-screen p-6 pr-14">
       <div className="text-3xl font-bold mb-8  text-black">
         <span className="font-normal italic">Sprint</span>
         <span className="">Earn</span>
