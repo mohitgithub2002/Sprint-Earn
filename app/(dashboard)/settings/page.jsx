@@ -1,9 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { checkUser} from '@/utils/auth';
+import { checkUser } from '@/utils/auth';
 import { updateUserProfile, updateUserPassword } from './api'; 
 import Image from 'next/image';
+import Loader from '@/components/loader';
+import { MoonLoader } from "react-spinners";
+import Swal from 'sweetalert2'; // Import Swal
+
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('details');
   const [userData, setUserData] = useState({
@@ -18,21 +22,26 @@ const Settings = () => {
     newPassword: '',
     confirmPassword: ''
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmittingProfile, setIsSubmittingProfile] = useState(false);
+  const [isSubmittingPassword, setIsSubmittingPassword] = useState(false);
 
-  useEffect(()=>{
-    const fetchUser = async() =>{
-        const data = await checkUser();
-        setUserData({
-          image:data.image,
-          name: data.name,
-          email: data.email,
-          website: data.website,
-          mobile: data.mobile,
-          description: data.description
-        });
+  useEffect(() => {
+    const fetchUser = async () => {
+      setIsLoading(true);
+      const data = await checkUser();
+      setUserData({
+        image: data.image,
+        name: data.name,
+        email: data.email,
+        website: data.website,
+        mobile: data.mobile,
+        description: data.description
+      });
+      setIsLoading(false);
     } 
     fetchUser();
-  },[])
+  }, []);
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -46,31 +55,81 @@ const Settings = () => {
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
-    console.log("at main page",userData)
+    setIsSubmittingProfile(true);
     const response = await updateUserProfile(userData);
-    if (response.status===200) {
-      alert('Profile updated successfully!');
+    setIsSubmittingProfile(false);
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    if (response.status === 200) {
+      Toast.fire({
+        icon: "success",
+        title: "Profile updated successfully"
+      });
     } else {
-      alert('Failed to update profile.');
+      Toast.fire({
+        icon: "error",
+        title: "Failed to update profile"
+      });
     }
   };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert('Passwords do not match!');
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Passwords do not match!"
+      });
       return;
     }
-    const response = await updateUserPassword(userData.email,passwordData.newPassword);
-    if (response.status===200) {
-      alert('Password updated successfully!');
+
+    setIsSubmittingPassword(true);
+    const response = await updateUserPassword(userData.email, passwordData.newPassword);
+    setIsSubmittingPassword(false);
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    if (response.status === 200) {
+      Toast.fire({
+        icon: "success",
+        title: "Password updated successfully"
+      });
     } else {
-      alert('Failed to update password.');
+      Toast.fire({
+        icon: "error",
+        title: "Failed to update password"
+      });
     }
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="p-8 text-black h-screen bg-white overflow-scroll">
+    <div className="p-8 text-black h-screen bg-white overflow-scroll pb-20 md:pb-0">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
         {/* Header */}
         <header className="border-b border-gray-200 pb-4 mb-6">
@@ -105,9 +164,9 @@ const Settings = () => {
                 </div>
               </div>
 
-              {/* name */}
+              {/* Name */}
               <div className="mb-6">
-                <label className="block text-gray-700 mb-2">name</label>
+                <label className="block text-gray-700 mb-2">Name</label>
                 <div className="relative">
                   <i className="fas fa-user absolute left-3 top-3 text-gray-400"></i>
                   <input
@@ -165,7 +224,7 @@ const Settings = () => {
                 </div>
               </div>
 
-              {/* description */}
+              {/* Description */}
               <div className="mb-6">
                 <label className="block text-gray-700 mb-2">Your description</label>
                 <div className="relative">
@@ -183,7 +242,9 @@ const Settings = () => {
               {/* Buttons */}
               <div className="flex justify-end space-x-4">
                 <button type="button" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
-                <button type="submit" className="bg-[#2d2de1] text-white px-4 py-2 rounded-md">Save changes</button>
+                <button type="submit" className="bg-[#2d2de1] text-white px-4 py-2 rounded-md flex items-center justify-center" disabled={isSubmittingProfile}>
+                  {isSubmittingProfile ? <MoonLoader size={18} color="#ffffff" /> : "Save changes"}
+                </button>
               </div>
             </form>
           </section>
@@ -228,7 +289,9 @@ const Settings = () => {
               {/* Buttons */}
               <div className="flex justify-end space-x-4">
                 <button type="button" className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
-                <button type="submit" className="bg-[#2d2de1] text-white px-4 py-2 rounded-md">Update Password</button>
+                <button type="submit" className="bg-[#2d2de1] text-white px-4 py-2 rounded-md flex items-center justify-center" disabled={isSubmittingPassword}>
+                  {isSubmittingPassword ? <MoonLoader size={18} color="#ffffff" /> : "Update Password"}
+                </button>
               </div>
             </form>
           </section>

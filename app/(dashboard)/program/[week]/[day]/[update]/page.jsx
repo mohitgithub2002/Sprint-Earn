@@ -1,21 +1,19 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useRouter } from 'next/navigation';
 import Welcome from '@/components/program/updates/welcome';
 import { useSession } from 'next-auth/react';
 import Swal from 'sweetalert2';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCalendarWeek, faCalendarDay, faEnvelope, faUpload, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-function Updates({params}) {
+function Updates({ params }) {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const weeks = params.week
+  const weeks = params.week;
   const weekNumber = weeks.match(/\d+/)[0];
-  const days = params.day
+  const days = params.day;
   const dayNumber = days.match(/\d+/)[0];
-  const [isForm, setIsForm] = useState(false)
+  const [isForm, setIsForm] = useState(false);
   const [files, setFiles] = useState([]);
   const [week, setWeek] = useState(weekNumber);
   const [day, setDay] = useState(dayNumber);
@@ -23,12 +21,10 @@ function Updates({params}) {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    if( status === "authenticated"){
-      console.log("session",session)
-      setEmail(session.user.email)
+    if (status === "authenticated") {
+      setEmail(session.user.email);
     }
-    
-  },[session,status])
+  }, [session, status]);
 
   const handleFileChange = (e) => {
     setFiles(e.target.files);
@@ -49,67 +45,66 @@ function Updates({params}) {
       method: 'POST',
       body: formData,
     });
-    if(response.status ===200){
+    if (response.status === 200) {
       Swal.fire({
         title: 'Success!',
         text: 'Your update has been submitted',
         icon: 'success',
         confirmButtonText: `<i class="fa fa-thumbs-up"></i> Cool`,
-        confirmButtonColor: '#2d2de1'
-      }).then(()=>{
-        router.push(`/program/week${weekNumber}`)
-      })
-    }
-    else{
+        confirmButtonColor: '#2d2de1',
+      }).then(() => {
+        router.push(`/program/week${weekNumber}`);
+      });
+    } else {
       Swal.fire({
         title: 'Error!',
         text: 'Something went wrong, please try again',
         icon: 'error',
-        confirmButtonText: `<i class="fa fa-thumbs-down"></i> Ok`
-      })
+        confirmButtonText: `<i class="fa fa-thumbs-down"></i> Ok`,
+      });
     }
-    
   };
 
-  const goBack = ()=>{
-    router.back()
-  }
-  
-  if(!isForm) return <Welcome setIsForm={setIsForm} goBack={goBack} week={weekNumber} day={dayNumber} />
+  const goBack = () => {
+    router.back();
+  };
+
+  if (!isForm)
+    return (
+      <Welcome setIsForm={setIsForm} goBack={goBack} week={weekNumber} day={dayNumber} />
+    );
 
   return (
-    <div className="h-screen flex items-center justify-center bg-white text-black overflow-y-scroll">
-      <div className=" w-1/2 min-h-[calc(100dvh-57px)] max-w-6xl mx-24  pb-12 md:py-12">
-        <h2 className="text-3xl font-bold text-gray-800 text-start mb-4">Week #{weekNumber} Update</h2>
+    <div className="h-screen flex items-center justify-center bg-white text-black overflow-y-scroll pb-20 md:pb-0">
+      <div className="w-full md:w-3/4 lg:w-1/2 min-h-[calc(100dvh-57px)] max-w-6xl mx-4 md:mx-24 pb-12 md:py-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-start mb-4">
+          Week #{weekNumber} Update
+        </h2>
         <p className="mb-6 text-gray-600">You made it to week {weekNumber}. Keep going!</p>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-black font-semibold">week</label>
+            <label className="block text-black font-semibold">Week</label>
             <div className="relative mt-2">
-              <i className="fas fa-calendar-week  text-lg absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" ></i>
-              
+              <i className="fas fa-calendar-week text-lg absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input
                 type="text"
-                placeholder="Enter Week Number"
                 value={`Week ${week}`}
-                readOnly= {true}
+                readOnly
                 required
-                className="w-full pl-10 pr-3 p-3 border border-gray-300 rounded-lg "
+                className="w-full pl-10 pr-3 p-3 border border-gray-300 rounded-lg"
               />
             </div>
           </div>
           <div>
-            <label className="block text-black font-semibold">day</label>
+            <label className="block text-black font-semibold">Day</label>
             <div className="relative mt-2">
-              <i className="fas fa-calendar-day  text-lg absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" ></i>
-              
+              <i className="fas fa-calendar-day text-lg absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input
                 type="text"
-                placeholder="Enter Day Number"
                 value={`Day ${dayNumber}`}
-                readOnly ={true}
+                readOnly
                 required
-                className="w-full pl-10 pr-3 p-3 border border-gray-300 rounded-lg "
+                className="w-full pl-10 pr-3 p-3 border border-gray-300 rounded-lg"
               />
             </div>
           </div>
@@ -127,7 +122,7 @@ function Updates({params}) {
           </div>
           <div>
             <label className="block text-black font-semibold">Uploads</label>
-            <div className="relative mt-2 ">
+            <div className="relative mt-2">
               <input
                 type="file"
                 multiple
@@ -136,8 +131,7 @@ function Updates({params}) {
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
               <div className="flex items-center cursor-pointer">
-                {/* <FaUpload className="text-gray-400 mr-2" size={20} /> */}
-                <i className="fas fa-upload  text-lg mr-2 text-gray-400" ></i>
+                <i className="fas fa-upload text-lg mr-2 text-gray-400"></i>
                 <span>{files.length > 0 ? `${files.length} file(s) selected` : "Click to upload files"}</span>
               </div>
             </div>
@@ -147,8 +141,7 @@ function Updates({params}) {
               type="submit"
               className="w-fit py-3 px-4 bg-cta text-white font-bold rounded-lg hover:scale-[1.03] transition duration-300 flex items-center gap-2 cursor-pointer"
             >
-              <i className="fas fa-paper-plane  text-lg " ></i>
-              {/* <FontAwesomeIcon icon={faPaperPlane} /> */}
+              <i className="fas fa-paper-plane text-lg"></i>
               Upload
             </button>
           </div>
