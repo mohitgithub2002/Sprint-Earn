@@ -1,6 +1,9 @@
+import Link from 'next/link';
 import React from 'react';
 
-const PremiumCard = () => {
+const PremiumCard = ({data}) => {
+  const week = data.currentWeek;
+  const day = data.currentDay;
   return (
     <div className="bg-green-300 rounded-lg p-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 space-x-0 md:space-x-4 w-full md:w-1/2">
       <div className="space-y-4 text-center md:text-left">
@@ -8,13 +11,15 @@ const PremiumCard = () => {
           IMPORTANT
         </button>
         <div className="text-xl font-bold text-gray-800">
-          Week 1 Update Pending
+          Week {week} Update Pending
         </div>
         <div className="text-gray-600">
-          Submit the Week 1 Update soon
+          Submit the Day {day} Update soon
         </div>
-        <button className="bg-green-600 text-white py-2 px-4 rounded-full">
+        <button  className="bg-green-600 text-white py-2 px-4 rounded-full">
+          <Link href={`/program/week${week}/day${day}/update`}>
           Update
+          </Link>
         </button>
       </div>
       <div className="flex items-center justify-center">
