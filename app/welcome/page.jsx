@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const PaymentSuccess = () => {
     useEffect(() => {
-        const timer = setTimeout(() => window.location.replace('https://sprintearn.com'), 3000);
+        const timer = setTimeout(() => window.location.replace('/home'), 3000);
         return () => clearTimeout(timer);
     }, []);
   return (
