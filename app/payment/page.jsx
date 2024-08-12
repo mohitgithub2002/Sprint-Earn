@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState, Suspense } from "react";
+import { signOut } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { checkUser } from "@/utils/auth";
@@ -7,6 +8,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Navbar from "@/components/navbar";
 import SkeletonPaymentOptions from "./skeletonPaymentOptions";
+import Loader from "@/components/loader";
 
 const PaymentOptions = () => {
   const router = useRouter();
@@ -23,7 +25,7 @@ const PaymentOptions = () => {
   const [name, setName] = useState("");
   const [isUserPremium, setIsUserPremium] = useState(false);
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     const getUserDetails = async () => {
       const user = await checkUser();
@@ -31,8 +33,9 @@ const PaymentOptions = () => {
         setEmail(user.email);
         setName(user.name);
         setPhone(user.mobile);
-        setIsUserPremium(user.premium);
+        setIsUserPremium(user.isPremium);
         console.log(user);
+        if(!user.isPremium) setIsLoading(false);
       }
     };
     getUserDetails();
@@ -40,9 +43,9 @@ const PaymentOptions = () => {
 
   useEffect(() => {
     if (isUserPremium) {
-      router.push("/dashboard");
+      router.push("/home");
     }
-  });
+  },[isUserPremium]);
 
   const checkout = async () => {
     try {
@@ -127,6 +130,8 @@ const PaymentOptions = () => {
     }
   }, [code]);
 
+  if(isLoading) return <Loader />
+
   return (
 
     
@@ -134,7 +139,7 @@ const PaymentOptions = () => {
       className="flex flex-col min-h-screen text-black space-y-8"
       style={{ backgroundImage: 'url(/bg.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
-      <Navbar />
+      <Navbar signOut={signOut}/>
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col md:flex-row w-11/12 lg:w-3/5 border border-bg-primary rounded-md">
         {/* Sidebar */}
@@ -240,6 +245,7 @@ const PaymentOptions = () => {
 };
 
 function Payment() {
+  
   return (
     // You could have a loading skeleton as the `fallback` too
     <Suspense fallback={SkeletonPaymentOptions}>
