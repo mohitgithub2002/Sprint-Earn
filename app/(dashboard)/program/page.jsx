@@ -3,6 +3,7 @@ import CourseCard from "@/components/program/weekcard";
 import WelcomeCard from "@/components/program/welcome";
 import getData from "./getdata";
 import Link from "next/link";
+import WeekList from "@/components/program/weeklist";
 
 
 const Program = async() => {
@@ -15,11 +16,7 @@ const Program = async() => {
         </div>
         <div className="space-y-4">
           <h1 className=" font-semibold text-2xl text-black">Program Details</h1>
-          <div className="grid grid-flow-row grid-cols-3 gap-4">
-            {data.map((data,index)=>{
-              return <Link href={`/program/week${index+1}`} key={index}><CourseCard data={data} /></Link>
-          })}
-          </div>
+          <WeekList data={data} />
           
         </div>
       </div>  
