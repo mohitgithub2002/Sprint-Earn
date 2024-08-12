@@ -81,7 +81,7 @@ export const BottomBar = () => {
   );
 
   return (
-    <div className="w-full bg-white fixed bottom-0 left-0 right-0 flex justify-between items-center p-2 md:hidden shadow-lg">
+    <div className="w-full bg-white fixed bottom-0 left-0 right-0 flex justify-between items-center p-2 md:hidden shadow-lg z-50">
       {bottomMenuItems.map((item) => renderBottomLink(item.href, item.label, item.icon))}
     </div>
   );
