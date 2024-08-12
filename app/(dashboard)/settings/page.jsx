@@ -70,7 +70,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="p-8 text-black h-screen bg-white overflow-scroll">
+    <div className="p-8 text-black h-screen bg-white overflow-scroll pb-20 md:pb-0">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
         {/* Header */}
         <header className="border-b border-gray-200 pb-4 mb-6">

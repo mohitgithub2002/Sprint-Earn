@@ -6,7 +6,7 @@ export default function DashboardTemplate({ children }) {
       <html lang="en">
         <body >
           <Navbar />
-            <div className="flex pt-16 md:pt-0">
+            <div className="flex pt-20 bg-white md:pt-0">
                 <Sidebar />
                 <BottomBar />
                 <div className="flex-1 ">

@@ -35,13 +35,13 @@ const CourseCard = ({ data, currentWeek, currentDay }) => {
           Week {data.week}
         </div>
         <div className="mt-4 text-gray-800 font-bold">{data.title}</div>
-        <div className="mt-1 text-gray-600 text-sm">{data.description}</div>
+        <div className="hidden md:block mt-1 text-gray-600 text-sm">{data.description}</div>
       </div>
       <div className="mt-4">
         <div className="text-xs text-gray-500">Progress</div>
-        <div className="mt-1 h-2 bg-purple-200 rounded-full relative">
+        <div className="mt-1 h-2 bg-gray-200 rounded-full relative">
           <div
-            className="absolute top-0 left-0 h-2 bg-purple-500 rounded-full"
+            className="absolute top-0 left-0 h-2 bg-white rounded-full"
             style={{ width: `${percentage.toFixed()}%`, backgroundColor: data.color }}
           ></div>
         </div>
