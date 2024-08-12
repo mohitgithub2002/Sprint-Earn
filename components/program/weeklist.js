@@ -3,24 +3,28 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import CourseCard from "@/components/program/weekcard";
 import { checkUser } from '@/utils/auth';
+import Loader from '@/components/loader'; // Import the Loader component
 
 const WeekList = ({ data }) => {
-    const [currentWeek, setCurrentWeek] = useState(1);
+    const [currentWeek, setCurrentWeek] = useState(null); // Initialize with null to handle loading state
     const [currentDay, setCurrentDay] = useState(1);
+    const [isLoading, setIsLoading] = useState(true); // State to manage loading
 
     useEffect(() => {
         const fetchCurrentWeek = async () => {
+            setIsLoading(true); // Start loading
             const data = await checkUser();
             const result = data.currentWeek;
             setCurrentWeek(result);
             setCurrentDay(data.currentDay);
+            setIsLoading(false); // Stop loading after data is fetched
         };
 
         fetchCurrentWeek();
     }, []);
 
-    if (currentWeek === null) {
-        return <div>Loading...</div>;
+    if (isLoading) {
+        return <Loader />; // Display Loader while data is being fetched
     }
 
     return (
