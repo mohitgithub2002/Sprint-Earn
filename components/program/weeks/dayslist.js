@@ -8,41 +8,56 @@ const DaysList = ({ weekDetail }) => {
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
-        // Simulate fetching the current value
         const fetchCurrent = async () => {
-            // Replace this with your actual function call
             const data = await checkUser();
-            const currentWeek = data.currentWeek
-            if(weekDetail.week < currentWeek) setCurrent(8)
-            else if(weekDetail.week > currentWeek) setCurrent(0)
+            const currentWeek = data.currentWeek;
+            if (weekDetail.week < currentWeek) setCurrent(8);
+            else if (weekDetail.week > currentWeek) setCurrent(0);
             else {
-                 setCurrent(data.currentDay) 
+                setCurrent(data.currentDay);
             }
-            
         };
 
         fetchCurrent();
-    }, []);
+    }, [weekDetail.week]);
 
     if (current === null) {
-        return <div>Loading...</div>; // or some loading state
+        return <div>Loading...</div>;
     }
 
     return (
         <div className="flex flex-col space-y-6">
             {weekDetail.days.map((day, index) => (
                 <div key={index}>
+                    {index+1>current ?
                     <div className="flex pl-8 pr-3 py-2 justify-between items-center border border-slate-700 rounded-full shadow-md hover:scale-[1.02] transition-all">
-                        <div><i className={`far fa-calendar mr-3`}></i>{`Day ${index + 1}`}</div>
-                        <h1 className="font-semibold text-lg">{day.title}</h1>
-                        {index+1 > current ?
-                            <i className={`fas fa-lock mr-10`}></i>
-                            :
-                            <Link href={`/program/week${weekDetail.week}/day${day.day}`}>
-                                <button className={`${index+1 < current ? "bg-[#e4e4e7] rounded-3xl text-black px-6 py-2.5" : "bg-[#2d2de1] rounded-3xl text-white px-6 py-2.5"}`}>{index+1 < current ? "View" : "Start"}</button>
-                            </Link>
-                        }
+                        <div className='hidden md:block'><i className={`far fa-calendar mr-3`}></i>{`Day ${index + 1}`}</div>
+                        <div className=' flex flex-col md:hidden'>{` ${index + 1}`}</div>
+                        <h1 className="font-semibold text-sm md:text-lg  text-center">{day.title}</h1>
+                        <i className={`fas fa-lock md:mr-10`}></i>
                     </div>
+                    :
+                    <Link href={`/program/week${weekDetail.week}/day${day.day}`} >
+                        <div className="flex pl-8 pr-3 py-2 justify-between items-center border border-slate-700 rounded-full shadow-md hover:scale-[1.02] transition-all">
+                            <div className='hidden md:block'><i className={`far fa-calendar mr-3`}></i>{`Day ${index + 1}`}</div>
+                            <div className=' flex flex-col md:hidden'>{` ${index + 1}`}</div>
+                            <h1 className="font-semibold text-sm md:text-lg  text-center">{day.title}</h1>
+                            
+                            <Link href={`/program/week${weekDetail.week}/day${day.day}`}>
+                                <button className={`${index + 1 < current ? "bg-[#e4e4e7] rounded-3xl text-black " : "bg-[#2d2de1] rounded-3xl text-white "} text-sm md:text-base px-4 md:px-6 py-1.5 md:py-2.5 hidden md:block`}>
+                                    {index + 1 < current ? "View" : "Start"}
+                                </button>
+                                <div className={`${index + 1 < current ? " text-black  " : " text-cta "} text-2xl flex justify-center items-center  md:hidden`} >
+                                <i class="fa-solid fa-angle-right"></i>
+                                </div>
+                            </Link>
+                            
+                        </div>
+                    
+                    </Link>
+                
+                    }
+                    
                 </div>
             ))}
         </div>
