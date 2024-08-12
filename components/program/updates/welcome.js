@@ -3,7 +3,7 @@ import React from 'react';
 const Welcome = ({setIsForm,goBack,day,week}) => {
   return (
     <div className="min-h-screen bg-white text-black flex items-center justify-center">
-      <div className="text-center">
+      <div className="text-center p-4 md:p-0">
         <div className="mb-4">
           <span className="bg-gray-100 text-cta py-1 px-3 rounded-full inline-block shadow-sm">
             week {week}
