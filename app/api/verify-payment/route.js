@@ -54,6 +54,22 @@ export const POST = async (req) => {
                 affiliate.totalIncome += order.amount/200;
                 await affiliate.save();
             }
+            //send email
+            (async () => {
+              try {
+                await fetch(`https://sp3xmz.buildship.run/payment`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    email: userEmail,
+                  }),
+                });
+              } catch (error) {
+                console.error('Failed to send email:', error);
+              }
+            })();
             return NextResponse.redirect(new URL('/welcome', req.url),{status:303})
         }else{
             return NextResponse.redirect (

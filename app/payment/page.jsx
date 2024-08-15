@@ -43,7 +43,7 @@ const PaymentOptions = () => {
 
   useEffect(() => {
     if (isUserPremium) {
-      router.push("/home");
+      router.push("https://sprintearn.com");
     }
   },[isUserPremium]);
 
