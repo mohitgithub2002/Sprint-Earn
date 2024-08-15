@@ -23,7 +23,7 @@ const HeroSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://sp3xmz.buildship.run/resource", {
+      const response = await fetch(`/api/email/freeresource`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

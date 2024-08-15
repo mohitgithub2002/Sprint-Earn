@@ -57,7 +57,7 @@ export const POST = async (req) => {
             //send email
             (async () => {
               try {
-                await fetch(`https://sp3xmz.buildship.run/payment`, {
+                await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/email/payment`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
