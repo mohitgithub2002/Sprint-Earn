@@ -72,7 +72,7 @@ const LoginPage = ({ setIsLoginPage }) => {
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex justify-center items-center">
               <img
-                src={`https://via.placeholder.com/150`}
+                src={`/${i}.png`}
                 alt={`Influencer ${i}`}
                 className="rounded-full w-24 h-24 md:w-32 md:h-32"
               />
