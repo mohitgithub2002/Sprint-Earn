@@ -25,7 +25,7 @@ const Sidebar = () => {
   const renderLink = (href, label, icon) => (
     <Link href={href} key={href}
         className={`flex items-center p-2 rounded-full ${
-          pathname.startsWith(href) ? 'text-[#2d2de1] bg-white border-l-4 border-[#2d2de1] shadow-md' : 'text-gray-700 hover:text-[#2d2de1] hover:bg-white'
+          pathname.startsWith(href) ? 'bg-[#2d2de1] text-white shadow-md pl-8' : 'text-gray-700 hover:text-[#2d2de1] hover:bg-white pl-8'
         }`}
       >
         <i className={`fas ${icon} mr-3`}></i> {label}
@@ -33,7 +33,7 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="w-1/5 bg-white min-h-screen p-6 pr-14 hidden md:block">
+    <div className="w-1/5 bg-white min-h-screen p-6 pr-24 hidden md:block border-r-2 border-[#eaecf0]">
       <div className="text-3xl font-bold mb-8 text-black">
         <span className="font-normal italic">Sprint</span>
         <span>Earn</span>
@@ -47,7 +47,7 @@ const Sidebar = () => {
         {settingsItems.map((item) => renderLink(item.href, item.label, item.icon))}
         <button 
           onClick={() => signOut()}
-          className={`flex items-center p-2 rounded-full text-gray-700 hover:text-[#e12d2d] hover:bg-white`}
+          className={`flex items-center p-2 pl-8 rounded-full text-gray-700 hover:text-[#e12d2d] hover:bg-white`}
           >
             <i className={`fas fa-sign-out-alt mr-3`}></i> Logout 
         </button>
@@ -81,7 +81,7 @@ export const BottomBar = () => {
   );
 
   return (
-    <div className="w-full bg-white fixed bottom-0 left-0 right-0 flex justify-between items-center p-2 md:hidden shadow-lg z-50">
+    <div className="w-full bg-white fixed bottom-0 left-0 right-0 flex justify-between items-center p-2 md:hidden shadow-lg z-50 ">
       {bottomMenuItems.map((item) => renderBottomLink(item.href, item.label, item.icon))}
     </div>
   );
