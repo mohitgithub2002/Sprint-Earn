@@ -1,22 +1,62 @@
+"use client";
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { WelcomeChat } from './welcomeModal';
+import Messages from './Messages';
+import ChatBox from './ChatBox';
 
 const Chat = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [chatStarted, setChatStarted] = useState(false);
+  const [messages, setMessages] = useState([]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleSendMessage = async (text) => {
+    if (!chatStarted) setChatStarted(true);
+
+    // Update the state with the user's message
+    setMessages((prev) => [...prev, { text, sender: 'user' }]);
+
+    try {
+      // Make API call to get the bot's response
+      const response = await fetch('https://api.sprintearn.com/generate-response', {
+        
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session_id: '069bdkhfasbkfb', // replace with the actual session ID if needed
+          input: text,
+        }),
+      });
+
+      const data = await response.json();
+
+      // Update the state with the bot's response
+      setMessages((prev) => [
+        ...prev,
+        { text: data.response, sender: 'bot' },
+      ]);
+    } catch (error) {
+      console.error('Error fetching bot response:', error);
+      // Handle error, e.g., show an error message
+      setMessages((prev) => [
+        ...prev,
+        { text: 'Sorry, something went wrong. Please try again.', sender: 'bot' },
+      ]);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col pb-12 md:pb-0">
+    <div className="h-screen flex flex-col relative">
       {/* Header */}
-      <header className="flex items-center justify-end md:justify-between p-4 bg-white">
+      <header className="flex items-center justify-end md:justify-between p-4 bg-white shadow-md z-1">
         <div className="hidden md:block text-xl font-bold">Sprint Earn AI</div>
-        <div className="flex  items-center space-x-4">
-          
-          <button className="bg-cta text-white px-4 py-2 rounded-full hidden md:block">New Chat</button>
-          {/* <i className="fas fa-user-circle text-xl hidden md:inline"></i> */}
+        <div className="flex items-center space-x-4">
           <button className="md:hidden" onClick={toggleSidebar}>
             <i className="fas fa-bars text-xl"></i>
           </button>
@@ -24,12 +64,12 @@ const Chat = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-col md:flex-row-reverse flex-grow">
+      <div className="flex flex-grow flex-row-reverse overflow-hidden">
         {/* Sidebar */}
         <div
           className={`fixed md:relative top-0 right-0 h-full w-3/4 max-w-xs bg-white p-4 shadow-md transform ${
             isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-          } transition-transform duration-300 ease-in-out z-20 md:w-1/4 md:translate-x-0`}
+          } transition-transform duration-300 ease-in-out z-20 md:w-1/4 md:translate-x-0 md:h-auto md:max-w-none`}
         >
           <div className="flex justify-between items-center mb-4 md:hidden">
             <h2 className="text-lg font-bold">Recent Chats</h2>
@@ -37,7 +77,6 @@ const Chat = () => {
               <i className="fas fa-times text-xl"></i>
             </button>
           </div>
-          <button className="bg-cta text-white px-4 py-2 rounded-full mb-4 md:hidden"> New Chat</button>
           <ul className="space-y-2 overflow-y-auto">
             <li className="p-2 border border-slate-400 bg-gray-100 rounded-full">New Project</li>
             <li className="p-2 border border-slate-400 bg-gray-100 rounded-full">Learning From 100 Years of...</li>
@@ -58,54 +97,18 @@ const Chat = () => {
         )}
 
         {/* Main Area */}
-        <div className="flex flex-col items-center justify-center p-4 md:p-8 flex-grow">
-          <div className="flex-1 flex items-center">
-            <div className="w-full text-center">
-              <h1 className="text-2xl md:text-4xl font-bold">Welcome to Sprint Earn</h1>
-              <p className="text-center text-gray-600 mb-4 md:mb-8">
-                Get started by SprintEarn Chat. Not sure where to start?
-              </p>
-              <div className="grid grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-8 max-w-md mx-auto">
-                <div className="flex items-center justify-between p-4 bg-yellow-100 rounded-lg shadow-md">
-                  <span className="font-bold">Write copy</span>
-                  <button className="bg-white p-2 rounded-full shadow-md">
-                    <i className="fas fa-wand-magic-sparkles"></i>
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-blue-100 rounded-lg shadow-md">
-                  <span className="font-bold">Image generation</span>
-                  <button className="bg-white p-2 rounded-full shadow-md">
-                    <i className="fas fa-wand-magic-sparkles"></i>
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-green-100 rounded-lg shadow-md">
-                  <span className="font-bold">Create avatar</span>
-                  <button className="bg-white p-2 rounded-full shadow-md">
-                    <i className="fas fa-wand-magic-sparkles"></i>
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-pink-100 rounded-lg shadow-md">
-                  <span className="font-bold">Write code</span>
-                  <button className="bg-white p-2 rounded-full shadow-md">
-                    <i className="fas fa-wand-magic-sparkles"></i>
-                  </button>
-                </div>
-              </div>
+        <div className="flex-grow flex flex-col justify-center items-center overflow-hidden bg-[#edf0f5]">
+          {chatStarted ? (
+            <div className="flex-grow w-full overflow-y-auto">
+              <Messages messages={messages} />
             </div>
-          </div>
+          ) : (
+            <WelcomeChat />
+          )}
 
-          <div className="w-full max-w-lg">
-            <div className="flex items-center bg-white p-4 rounded-full shadow-md">
-              <input
-                type="text"
-                placeholder="Summarize the latest..."
-                className="flex-grow p-2 rounded-l-full outline-none"
-              />
-              <button className="bg-cta text-white px-4 py-2 rounded-full">
-                <i className="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            
+          {/* Fixed ChatBox */}
+          <div className="w-full shadow-sm p-4 bg-transparent fixed bottom-12 md:bottom-0 left-0 right-0 md:relative">
+            <ChatBox onSendMessage={handleSendMessage} />
           </div>
         </div>
       </div>
