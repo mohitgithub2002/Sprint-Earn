@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import ChatBox from "@/components/home/chatbox";
 import ProgressCards from "@/components/home/progress";
 import PremiumCard from "@/components/home/task";
