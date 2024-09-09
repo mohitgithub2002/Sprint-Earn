@@ -42,9 +42,12 @@ export const authOption = {
     callbacks: {
         async jwt ({token, user, }) {
             if(user){
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users?email=${user.email}`);
+                const data = await res.json();
+                
                 return {
                     ...token,
-                    id: user._id,
+                    isPremium : data.data.isPremium,
                 }
             };
             return token;

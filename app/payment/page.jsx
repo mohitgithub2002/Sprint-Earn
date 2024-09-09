@@ -34,6 +34,9 @@ const PaymentOptions = () => {
         setName(user.name);
         setPhone(user.mobile);
         setIsUserPremium(user.isPremium);
+        if (user.isPremium) {
+          router.push("/home");
+        }
         console.log(user);
         if(!user.isPremium) setIsLoading(false);
       }
@@ -41,11 +44,7 @@ const PaymentOptions = () => {
     getUserDetails();
   }, []);
 
-  useEffect(() => {
-    if (isUserPremium) {
-      router.push("https://sprintearn.com");
-    }
-  },[isUserPremium]);
+  
 
   const checkout = async () => {
     try {
