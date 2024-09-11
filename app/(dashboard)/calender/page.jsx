@@ -74,7 +74,7 @@ const ScheduleTable = () => {
   );
 
   const renderMobileView = () => (
-    <div className="w-[100vw] h-[100dvh] overflow-auto">
+    <div className="w-screen h-[calc(100vh-128px)] overflow-y-auto overflow-x-hidden">
       <div className="flex space-x-4 bg-white p-2 overflow-x-scroll">
         {schedule.map((week) => (
           <button
@@ -88,7 +88,7 @@ const ScheduleTable = () => {
           </button>
         ))}
       </div>
-      <div className="mt-2 p-2">
+      <div className="mt-2 p-2 overflow-y-auto">
         {schedule
           .find((week) => `Week ${week.week}` === selectedWeek)
           ?.days.map((day, index) => (
@@ -107,8 +107,8 @@ const ScheduleTable = () => {
   );
 
   return (
-    <div className="h-screen overflow-y-scroll bg-white text-black">
-      <div className="hidden md:block">{renderDesktopView()}</div>
+    <div className="  bg-white text-black">
+      <div className="hidden md:block h-screen overflow-y-auto">{renderDesktopView()}</div>
       <div className="block md:hidden">{renderMobileView()}</div>
     </div>
   );

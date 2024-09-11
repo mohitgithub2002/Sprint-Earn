@@ -7,7 +7,7 @@ export default async function Navbar() {
     const session = await getServerSession(authOption)
     const image = session?.user?.image
     return (
-      <nav className="flex md:hidden text-black justify-between items-center p-4 bg-white shadow-sm fixed top-0 w-full z-10">
+      <nav className="flex md:hidden text-black justify-between h-20 items-center p-4 bg-white shadow-sm fixed top-0 w-full z-10">
         <Link href={"/home"}>
           <h2 className='text-2xl'><span className="font-normal italic">Sprint</span><span className="font-bold">Earn</span></h2>
         </Link>
