@@ -9,7 +9,7 @@ export default async function DashboardTemplate({ children }) {
             <div className="flex pt-20 bg-white md:pt-0">
                 <Sidebar />
                 <BottomBar />
-                <div className="flex-1 ">
+                <div className="flex-1 md:h-screen md:overflow-y-auto">
                     {children}
                 </div>
             </div>
