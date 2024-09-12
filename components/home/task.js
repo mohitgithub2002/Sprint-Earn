@@ -16,7 +16,7 @@ const PremiumCard = ({data}) => {
           Week {week} Update <span className="text-indigo-600">Pending</span>
         </h2>
         <p className="text-gray-600 text-lg">
-          Don't forget to submit your Day {day} update soon!
+          Don&apos;t forget to submit your Day {day} update soon!
         </p>
         <Link href={`/program/week${week}/day${day}/update`}>
           <button className="group bg-indigo-600 text-white py-4 px-8 rounded-full font-bold text-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center space-x-3 shadow-md hover:shadow-lg">

@@ -17,7 +17,7 @@ const StartProgramCard = ({ data }) => {
           Begin Your <span className="text-indigo-600">Journey</span>
         </h2>
         <p className="text-gray-600 text-lg">
-          It's time to start your program! Are you ready for the challenge?
+          It&apos;s time to start your program! Are you ready for the challenge?
         </p>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
           <div className="flex items-center space-x-2 text-gray-600">
