@@ -33,7 +33,7 @@ export default function HeaderSection({ weekNumber, dayNumber, currentDay, curre
   console.log("Previous accessible:", isPreviousAccessible, "Next accessible:", isNextAccessible);
 
   return (
-    <div className="bg-white text-gray-800 flex flex-row items-center justify-between px-4 py-2 w-full mt-2 border-b-2 border-[#eaecf0] z-20">
+    <div className="bg-white text-gray-800 flex flex-row items-center justify-between px-4 py-2 w-full mt-2 border-b-2 border-[#eaecf0] z-20 h-20">
       {/* Left section with back icon, breadcrumb and icons */}
       <div className="flex items-center space-x-2 mb-2 md:mb-0">
         <FaChevronLeft 
