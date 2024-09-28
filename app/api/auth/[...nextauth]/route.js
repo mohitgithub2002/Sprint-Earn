@@ -40,25 +40,31 @@ export const authOption = {
     ],
 
     callbacks: {
-        async jwt ({token, user, }) {
-            if(user){
-                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users?email=${user.email}`);
-                const data = await res.json();
-                
-                return {
-                    ...token,
-                    isPremium : data.data.isPremium,
-                }
-            };
+        async jwt ({token, user, trigger, session}) {
+            if (user) {
+                token.id = user.id;
+            }
+            
+            // Always fetch the latest user data
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users?email=${token.email}`);
+            const data = await res.json();
+            
+            token.isPremium = data.data.isPremium;
+
+            // Handle session update
+            if (trigger === "update" && session?.isPremium) {
+                token.isPremium = session.isPremium;
+            }
+
             return token;
         },
-        async session({session, token}){
-           
+        async session({session, token}) {
             return {
                 ...session,
                 user: {
                     ...session.user,
                     id: token.id,
+                    isPremium: token.isPremium,
                 },
             };
         },

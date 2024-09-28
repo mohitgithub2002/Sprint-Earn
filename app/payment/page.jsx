@@ -49,45 +49,57 @@ const PaymentOptions = () => {
   const checkout = async () => {
     try {
       setIsPaymentLoading(true);
-      const res = await fetch("/api/checkout", {
+      const txnid = `order_${Date.now()}`;
+      const amount = price - discount;
+      const productinfo = "Premium subscription";
+
+      // Get hash from server
+      const hashResponse = await fetch("/api/payment/hash", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: email,
-          amount: price - discount,
-          phone: phone,
-          code: promoCode,
+          txnid,
+          amount,
+          productinfo,
+          firstname: name,
+          email,
         }),
       });
-      const data = await res.json();
-      const order = data.order;
-      console.log("order is", order);
 
-      const options = {
-        key: process.env.RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: "INR",
-        name: "Sprint Earn",
-        description: "Premium subscription",
-        image: "",
-        order_id: order.id,
-        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/verify-payment`,
-        prefill: {
-          name: name,
-          email: email,
-          contact: phone,
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#306338 ",
-        },
+      const { hash } = await hashResponse.json();
+
+      // Create form and submit
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://secure.payu.in/_payment'; // Use the appropriate PayU URL
+
+      const params = {
+        key: 'B2VBVP',
+        txnid,
+        amount,
+        productinfo,
+        firstname: name,
+        email,
+        phone,
+        surl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/success`,
+        furl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/failure`,
+        hash,
       };
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
+      
+
+      for (let key in params) {
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = key;
+        hiddenField.value = params[key];
+        form.appendChild(hiddenField);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+
       setIsPaymentLoading(false);
     } catch (err) {
       setIsPaymentLoading(false);
@@ -236,7 +248,6 @@ const PaymentOptions = () => {
       </div>
       </div>
       
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     </div>
     
     
