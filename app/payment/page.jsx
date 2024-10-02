@@ -65,6 +65,7 @@ const PaymentOptions = () => {
           productinfo,
           firstname: name,
           email,
+          promoCode
         }),
       });
 
@@ -86,6 +87,7 @@ const PaymentOptions = () => {
         surl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/success`,
         furl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/failure`,
         hash,
+        udf1: promoCode, // Add the promo code as a custom field
       };
       
 
@@ -120,7 +122,7 @@ const PaymentOptions = () => {
 
       const data = await response.json();
       if (data.status === 200) {
-        setDiscount(2000);
+        setDiscount(11999);
         setReferralName(data.data);
         setError("");
       } else {

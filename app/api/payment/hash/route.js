@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
-    const { txnid, amount, productinfo, firstname, email } = await req.json();
+    const { txnid, amount, productinfo, firstname, email, promoCode } = await req.json();
 
     // Replace these with your actual PayU credentials
     const key = process.env.PAYU_KEY;
@@ -15,7 +15,7 @@ export async function POST(req) {
     }
 
     // Create the string to hash
-    const hashString = `${key}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${salt}`;
+    const hashString = `${key}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|${promoCode}||||||||||${salt}`;
 
     // Generate the hash
     const hash = crypto.createHash('sha512').update(hashString).digest('hex');
